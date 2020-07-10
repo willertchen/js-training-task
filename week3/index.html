@@ -18,6 +18,7 @@
 </head>
 <body>
   <div id="app" class="container mt-3">
+    <!-- {{ info }} -->
     <div class="text-right">
       <button class="btn btn-primary">
         建立新的產品
@@ -35,13 +36,19 @@
         </tr>
       </thead>
       <tbody>
-        <tr>
-          <td>主機</td>
-          <td>PS4</td>
-          <td>20000</td>
-          <td>19000</td>
-          <td>啟用</td>
-          <td>未啟用</td>
+        <tr v-for="(item) in products" :key="item.id">
+          <td>{{ item.category }}</td>
+          <td>{{ item.title }}</td>
+          <td>{{ item.origin_price }}</td>
+          <td>{{ item.price }}</td>
+          <td>
+            <span v-if="item.enabled" class="text-success">啟用</span>
+            <span v-else>未啟用</span>
+          </td>
+          <td>
+            <button class="btn btn-outline-success btn-sm">編輯</button>
+            <button class="btn btn-outline-danger btn-sm">修改</button>
+          </td>
         </tr>
       </tbody>
     </table>
@@ -54,6 +61,9 @@
 
   <!-- Vue.js -->
   <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+
+  <!-- axios -->
+  <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
 
   <!-- Myself JS -->
   <script src="all.js"></script>

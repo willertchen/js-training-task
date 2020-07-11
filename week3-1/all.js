@@ -62,6 +62,7 @@ new Vue({
     openModal(type, item) {
       switch (type) {
         case 'new':
+          this.tempProduct = {}
           $('#productModal').modal('show');
           break;
         case 'edit':
@@ -75,12 +76,18 @@ new Vue({
       }
     },
     updateProduct() {
-      const id = this.tempProduct.id;
-      this.products.forEach((product, index) => {
-        if (product.id === id) {
-          this.products[index] = this.tempProduct;
-        }
-      });
+      if (this.tempProduct.id) {
+        const id = this.tempProduct.id;
+        this.products.forEach((product, index) => {
+          if (product.id === id) {
+            this.products[index] = this.tempProduct;
+          }
+        });
+      } else {
+        const id = Math.floor(Date.now());
+        this.tempProduct.id = id;
+        this.products.push(this.tempProduct);
+      }
 
       this.tempProduct = {};  // 清空 tempProduct，避免下次打開 Modal 時，發生資料不正確的問題
       $('#productModal').modal('hide');

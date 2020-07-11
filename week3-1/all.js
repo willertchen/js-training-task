@@ -70,6 +70,8 @@ new Vue({
           $('#productModal').modal('show');
           break;
         case 'delete':
+          this.tempProduct = item
+          $('#deleteModal').modal('show');
           break;
         default:
           break;
@@ -91,6 +93,18 @@ new Vue({
 
       this.tempProduct = {};  // 清空 tempProduct，避免下次打開 Modal 時，發生資料不正確的問題
       $('#productModal').modal('hide');
+    },
+    deleteProduct() {
+      if (this.tempProduct.id) {
+        const id = this.tempProduct.id;
+        this.products.forEach((product, index) => {
+          if (product.id === id) {
+            this.products.splice(index, 1);
+            this.tempProduct = {};
+          }
+        });
+      }
+      $('#deleteModal').modal('hide');
     }
   }
 });

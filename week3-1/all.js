@@ -66,11 +66,12 @@ new Vue({
           $('#productModal').modal('show');
           break;
         case 'edit':
-          this.tempProduct = item;
+          // 下面的 item 是淺拷貝，需要用深拷貝的方式接資料，避免修改資料時，沒按儲取，一樣能修改資料
+          this.tempProduct = Object.assign({}, item);
           $('#productModal').modal('show');
           break;
         case 'delete':
-          this.tempProduct = item
+          this.tempProduct = Object.assign({}, item);  //同69行
           $('#deleteModal').modal('show');
           break;
         default:

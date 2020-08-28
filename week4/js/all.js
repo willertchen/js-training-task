@@ -2,7 +2,9 @@ new Vue({
   el: '#app',
   data: {
     products: [],
-    tempProduct: {},
+    tempProduct: {
+      imageUrl: [],
+    },
     user: {
       token: '',
       uuid: '',
@@ -22,6 +24,9 @@ new Vue({
     this.getProducts();
   },
   methods: {
+    /**
+     * 取得產品清單
+     */
     getProducts() {
       const api = `https://course-ec-api.hexschool.io/api/${this.user.uuid}/admin/ec/products`;
 
@@ -35,21 +40,40 @@ new Vue({
     openModal(type, item) {
       switch (type) {
         case 'new':
-          this.tempProduct = {}
+          // 新增前先清空 tempProduct，避免下次打開 Modal 時，發生資料不正確的問題
+          this.tempProduct = {
+            imageUrl: [],
+          };
           $('#productModal').modal('show');
           break;
         case 'edit':
-          // 下面的 item 是淺拷貝，需要用深拷貝的方式接資料，避免修改資料時，沒按儲取，一樣能修改資料
-          this.tempProduct = Object.assign({}, item);
-          $('#productModal').modal('show');
+          // 先取得單一產品的詳細資訊，再打開 Modal
+          this.getProduct(item.id);
           break;
         case 'delete':
+          // 因下面的 item 是淺拷貝，需要用「深拷貝」的方式接資料，避免修改資料時，沒按儲取，一樣能修改資料
           this.tempProduct = Object.assign({}, item);
           $('#deleteModal').modal('show');
           break;
         default:
           break;
       }
+    },
+    /**
+     * 取得單一產品
+     * @param id 傳入產品的 ID
+     */
+    getProduct(id) {
+      const api = `https://course-ec-api.hexschool.io/api/${this.user.uuid}/ec/product/${id}`;
+      axios.get(api).then((res) => {
+        //  成功取得資料，丟到 tempProduct
+        this.tempProduct = res.data.data;
+        // 資料成功寫入 tempProduct，打開 Modal
+        $('#productModal').modal('show');
+      }).catch((error) => {
+        console.log(error);  // 如果出現錯誤，就打印在 log
+      });
+
     },
     updateProduct() {
       if (this.tempProduct.id) {
@@ -65,14 +89,10 @@ new Vue({
         this.products.push(this.tempProduct);
       }
 
-      this.tempProduct = {};  // 清空 tempProduct，避免下次打開 Modal 時，發生資料不正確的問題
       $('#productModal').modal('hide');
     },
     deleteProduct() {
       const url = `https://course-ec-api.hexschool.io/api/${this.user.uuid}/admin/ec/product/${this.tempProduct.id}`;
-
-      // 預設帶入 token
-      axios.defaults.headers.common.Authorization = `Bearer ${this.user.token}`;
 
       axios.delete(url).then(() => {
         $('#deleteModal').modal('hide'); // 刪除成功，關閉 Modal

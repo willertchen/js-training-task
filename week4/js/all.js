@@ -44,7 +44,7 @@ new Vue({
           $('#productModal').modal('show');
           break;
         case 'delete':
-          this.tempProduct = Object.assign({}, item);  //同69行
+          this.tempProduct = Object.assign({}, item);
           $('#deleteModal').modal('show');
           break;
         default:
@@ -69,16 +69,16 @@ new Vue({
       $('#productModal').modal('hide');
     },
     deleteProduct() {
-      if (this.tempProduct.id) {
-        const id = this.tempProduct.id;
-        this.products.forEach((product, index) => {
-          if (product.id === id) {
-            this.products.splice(index, 1);
-            this.tempProduct = {};
-          }
-        });
-      }
-      $('#deleteModal').modal('hide');
+      const url = `https://course-ec-api.hexschool.io/api/${this.user.uuid}/admin/ec/product/${this.tempProduct.id}`;
+
+      // 預設帶入 token
+      axios.defaults.headers.common.Authorization = `Bearer ${this.user.token}`;
+
+      axios.delete(url).then(() => {
+        $('#deleteModal').modal('hide'); // 刪除成功，關閉 Modal
+        this.getProducts(); // 重新取得資料
+      });
+
     }
   }
 });

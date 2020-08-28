@@ -32,3 +32,7 @@
    - 實作登入
    - 將 token & uuid 寫入 cookies
    - 頁面更換
+2. 產品列表頁面
+   - 製作頁面
+   - 套用 Vue.js
+   - 用 axios 取得遠端資料

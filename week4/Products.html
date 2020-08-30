@@ -71,10 +71,10 @@
               <div class="col-sm-4">
                 <div class="form-group">
                   <label for="imageUrl">輸入圖片網址</label>
-                  <input id="imageUrl" v-model="tempProduct.imageUrl" type="text" class="form-control"
+                  <input id="imageUrl" v-model="tempProduct.imageUrl[0]" type="text" class="form-control"
                     placeholder="請輸入圖片連結">
                 </div>
-                <img class="img-fluid" :src="tempProduct.imageUrl" :alt="tempProduct.title">
+                <img class="img-fluid" :src="tempProduct.imageUrl[0]" :alt="tempProduct.title">
               </div>
               <div class="col-sm-8">
                 <div class="form-group">

@@ -5,6 +5,7 @@ new Vue({
     tempProduct: {
       imageUrl: [],
     },
+    isNew: false,
     user: {
       token: '',
       uuid: '',
@@ -44,11 +45,15 @@ new Vue({
           this.tempProduct = {
             imageUrl: [],
           };
+          // 切換狀態，true 表示新增產品
+          this.isNew = true;
           $('#productModal').modal('show');
           break;
         case 'edit':
           // 先取得單一產品的詳細資訊，再打開 Modal
           this.getProduct(item.id);
+          // 切換狀態，fals 表示編輯產品
+          this.isNew = false;
           break;
         case 'delete':
           // 因下面的 item 是淺拷貝，需要用「深拷貝」的方式接資料，避免修改資料時，沒按儲取，一樣能修改資料
@@ -76,12 +81,18 @@ new Vue({
 
     },
     updateProduct() {
-      // 編輯產品
+      // 編輯產品的 api
       let api = `https://course-ec-api.hexschool.io/api/${this.user.uuid}/admin/ec/product/${this.tempProduct.id}`;
+      let httpMethod = 'patch';
 
-      axios.patch(api, this.tempProduct).then(() => {
+      if (this.isNew) {
+        api = `https://course-ec-api.hexschool.io/api/${this.user.uuid}/admin/ec/product`;
+        httpMethod = 'post';
+      }
+
+      axios[httpMethod](api, this.tempProduct).then(() => {
+        $('#productModal').modal('hide');  // AJAX 編輯 or 新增成功後，關閉 Modal
         this.getProducts(); // 重新取得全部資料
-        $('#productModal').modal('hide');  // AJAX 編輯成功後，關閉 Modal
       }).catch((error) => {
         console.log(error);  // 如果出現錯誤，就打印在 log
       });

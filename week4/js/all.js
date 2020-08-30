@@ -76,27 +76,23 @@ new Vue({
 
     },
     updateProduct() {
-      if (this.tempProduct.id) {
-        const id = this.tempProduct.id;
-        this.products.forEach((product, index) => {
-          if (product.id === id) {
-            this.products[index] = this.tempProduct;
-          }
-        });
-      } else {
-        const id = Math.floor(Date.now());
-        this.tempProduct.id = id;
-        this.products.push(this.tempProduct);
-      }
+      // 編輯產品
+      let api = `https://course-ec-api.hexschool.io/api/${this.user.uuid}/admin/ec/product/${this.tempProduct.id}`;
 
-      $('#productModal').modal('hide');
+      axios.patch(api, this.tempProduct).then(() => {
+        this.getProducts(); // 重新取得全部資料
+        $('#productModal').modal('hide');  // AJAX 編輯成功後，關閉 Modal
+      }).catch((error) => {
+        console.log(error);  // 如果出現錯誤，就打印在 log
+      });
+
     },
     deleteProduct() {
       const url = `https://course-ec-api.hexschool.io/api/${this.user.uuid}/admin/ec/product/${this.tempProduct.id}`;
 
       axios.delete(url).then(() => {
         $('#deleteModal').modal('hide'); // 刪除成功，關閉 Modal
-        this.getProducts(); // 重新取得資料
+        this.getProducts(); // 重新取得全部資料
       });
 
     }

@@ -1,7 +1,12 @@
+import pagination from './pagination.js';
+
+Vue.component('pagination', pagination);
+
 new Vue({
   el: '#app',
   data: {
     products: [],
+    pagination: {},
     tempProduct: {
       imageUrl: [],
     },
@@ -27,15 +32,17 @@ new Vue({
   methods: {
     /**
      * 取得產品清單
+     * @param page 頁碼，預設值為第一頁
      */
-    getProducts() {
-      const api = `https://course-ec-api.hexschool.io/api/${this.user.uuid}/admin/ec/products`;
+    getProducts(page = 1) {
+      const api = `https://course-ec-api.hexschool.io/api/${this.user.uuid}/admin/ec/products?page=${page}`;
 
       // 預設帶入 token
       axios.defaults.headers.common.Authorization = `Bearer ${this.user.token}`;
 
       axios.get(api).then((response) => {
         this.products = response.data.data;
+        this.pagination = response.data.meta.pagination; // 取得分頁資訊
       });
     },
     openModal(type, item) {

@@ -53,6 +53,9 @@
         </tr>
       </tbody>
     </table>
+    <!-- :pages 是 pagination.js 的 props 屬性名稱，後面是要傳入資料的名稱 -->
+    <!-- 用 @emit-pages 去綁定 getProducts，而 @emit-pages 的名稱要與 this.@emit('事件名稱') 相同 -->
+    <pagination :pages='pagination' @emit-pages='getProducts'></pagination>
 
     <!-- Update Modal -->
     <div class="modal fade" id="productModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
@@ -176,6 +179,7 @@
   <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
 
   <!-- Myself JS -->
-  <script src="js/all.js"></script>
+  <!-- 加上 module 才可以在 all.js 引用 pagination 的元件 -->
+  <script src="js/all.js" type="module"></script>
 </body>
 </html>

@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Week 5 - 表單驗證</title>
+  <!-- Bootstrap CSS -->
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css" integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
+  <!-- Font Awesome -->
+  <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.13.1/css/all.css" integrity="sha384-xxzQGERXS00kBmZW/6qxqJPyxW3UR0BPsL4c8ILaIWXva5kFi7TxkIIaMiKtqV1Q" crossorigin="anonymous">
+</head>
+<body>
+  <div id="app" class="container">
+    <div class="my-5 row justify-content-center">
+      <!-- validation-observer v-slot 回饋表單有沒有通過驗證 -->
+      <validation-observer v-slot="{ invalid }" class="col-md-6">
+        <!-- form 不帶 action，用 submit 取消預設，並載入自定義方法 -->
+        <form @submit.prevent="checkSubmit">
+          <div class="form-group">
+            <!-- v-slot 的 errors 是錯誤的回饋訊息，classes 則是樣式的回饋訊息 -->
+            <validation-provider v-slot="{ errors, classes }" rules="required">
+              <label for="username">收件人姓名</label>
+              <!-- classes 的回饋訊息綁定動態 class，就會出現 is-invalid 的樣式-->
+              <input id="username" v-model="form.name" type="text" class="form-control" :class="classes">
+              <!-- errors 錯誤回饋訊息，用 v-if 判別，如果存在就顯示錯誤訊息，不存在就不顯示任何訊息 -->
+              <span v-if="errors[0]" class="text-danger">{{ errors[0] }}</span>
+            </validation-provider>
+          </div>
+          <div class="form-group">
+            <validation-provider v-slot="{ errors, classes }" rules="required|email">
+              <label for="email">Email</label>
+              <input id="email" v-model="form.email" type="email" class="form-control" :class="classes">
+              <span v-if="errors[0]" class="text-danger">{{ errors[0] }}</span>
+            </validation-provider>
+          </div>
+          <div class="form-group">
+            <validation-provider v-slot="{ errors, classes }" rules="required|min:8">
+              <label for="tel">電話</label>
+              <input id="tel" v-model="form.tel" type="tel" class="form-control" :class="classes">
+              <span v-if="errors[0]" class="text-danger">{{ errors[0] }}</span>
+            </validation-provider>
+          </div>
+          <div class="form-group">
+            <validation-provider v-slot="{ errors, classes }" rules="required">
+              <label for="address">地址</label>
+              <input id="address" v-model="form.address" type="text" class="form-control" :class="classes">
+              <span v-if="errors[0]" class="text-danger">{{ errors[0] }}</span>
+            </validation-provider>
+          </div>
+          <div class="form-group">
+            <!-- select 也要使用 validation-provider，否則沒有選任何項目時，buttom 會是 enabled -->
+            <validation-provider v-slot="{ errors, classes }" rules="required">
+              <label for="payment">購買方式</label>
+              <select v-model="form.payment" class="form-control" required>
+                <option value="" disabled>請選擇付款方式</option>
+                <option value="WebATM">WebATM</option>
+                <option value="ATM">ATM</option>
+                <option value="Barcode">Barcode</option>
+                <option value="Credit">Credit</option>
+                <option value="ApplePay">ApplePay</option>
+                <option value="GooglePay">GooglePay</option>
+                <option value="CVS">CVS</option>
+              </select>
+              <span v-if="errors[0]" class="text-danger">{{ errors[0] }}</span>
+            </validation-provider>
+          </div>
+          <div class="form-group">
+            <label for="message">留言</label>
+            <textarea id="message" v-model="form.message" class="form-control" cols="30" rows="3">
+            </textarea>
+          </div>
+
+          <div class="text-right">
+            <!-- 透過表單 v-slot invalid 回饋訊息決定按鈕能不能使用 -->
+            <button type="submit" class="btn btn-primary" :disabled="invalid">送出表單</button>
+          </div>
+        </form>
+      </validation-observer>
+    </div>
+
+  </div> <!-- div#app -->
+
+  <!-- JS, Popper.js, and jQuery -->
+  <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js" integrity="sha384-9/reFTGAW83EW2RDu2S0VKaIzap3H66lZH81PoYlFhbGU+6BZp6G7niu735Sk7lN" crossorigin="anonymous"></script>
+  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js" integrity="sha384-B4gt1jrGC7Jh4AgTPSdUtOBvfO8shuf57BaghqFfPlYxofvL8/KUEfYiJOMMV+rV" crossorigin="anonymous"></script>
+
+  <!-- Vue.js -->
+  <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+  <!-- https://cdnjs.com/libraries/vee-validate 注意版本，full 則包含 rules -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/vee-validate/3.3.0/vee-validate.full.min.js"></script>
+
+  <!-- Myself JS -->
+  <!-- 加上 module 才可以在 all.js 引用 pagination 的元件 -->
+  <script src="js/all.js" type="module"></script>
+</body>
+</html>

@@ -16,6 +16,8 @@ VeeValidate.localize('tw', zh_TW);
 Vue.component('ValidationProvider', VeeValidate.ValidationProvider);
 // 載入 VeeValidate 完整表單 驗證工具，並註冊成全域元件
 Vue.component('ValidationObserver', VeeValidate.ValidationObserver);
+// 載入 vue-loading
+Vue.component('loading', VueLoading);
 
 new Vue({
   el: '#app',
@@ -28,6 +30,7 @@ new Vue({
       payment: '',
       message: '',
     },
+    isLoading: false,
   },
   methods: {
     checkSubmit() {

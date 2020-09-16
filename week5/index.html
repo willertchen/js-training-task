@@ -8,10 +8,17 @@
   <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css" integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
   <!-- Font Awesome -->
   <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.13.1/css/all.css" integrity="sha384-xxzQGERXS00kBmZW/6qxqJPyxW3UR0BPsL4c8ILaIWXva5kFi7TxkIIaMiKtqV1Q" crossorigin="anonymous">
+  <!-- vue-loading-overlay -->
+  <link href="https://cdn.jsdelivr.net/npm/vue-loading-overlay@3/dist/vue-loading.css" rel="stylesheet">
 </head>
 <body>
   <div id="app" class="container">
     <div class="my-5 row justify-content-center">
+
+      <!-- loading 套件 start -->
+      <loading :active.sync="isLoading"></loading>
+      <!-- loading 套件 end -->
+
       <!-- validation-observer v-slot 回饋表單有沒有通過驗證 -->
       <validation-observer v-slot="{ invalid }" class="col-md-6">
         <!-- form 不帶 action，用 submit 取消預設，並載入自定義方法 -->
@@ -89,6 +96,8 @@
   <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
   <!-- https://cdnjs.com/libraries/vee-validate 注意版本，full 則包含 rules -->
   <script src="https://cdnjs.cloudflare.com/ajax/libs/vee-validate/3.3.0/vee-validate.full.min.js"></script>
+  <!-- vue-loading-overlay -->
+  <script src="https://cdn.jsdelivr.net/npm/vue-loading-overlay@3"></script>
 
   <!-- Myself JS -->
   <!-- 加上 module 才可以在 all.js 引用 pagination 的元件 -->

@@ -22,6 +22,10 @@ Vue.component('loading', VueLoading);
 new Vue({
   el: '#app',
   data: {
+    products: [],
+    tempProduct: {
+      num: 0,
+    },
     form: {
       name: '',
       email: '',
@@ -31,10 +35,20 @@ new Vue({
       message: '',
     },
     isLoading: false,
+    uuid: 'd5cc7331-56ba-49f5-9c9f-6c2038f2b0a8',
+    apiPath: 'https://course-ec-api.hexschool.io',
+  },
+  created() {
+    this.getProducts();
   },
   methods: {
-    checkSubmit() {
-      console.log(this.form);
-    }
-  }
+    getProducts() {
+      this.isLoading = true;
+      const api = `${this.apiPath}/api/${this.uuid}/ec/products?sort=asc`;
+      axios.get(api).then((response) => {
+        this.products = response.data.data;
+        this.isLoading = false;
+      });
+    },
+  },
 });

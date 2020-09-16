@@ -19,6 +19,51 @@
       <loading :active.sync="isLoading"></loading>
       <!-- loading 套件 end -->
 
+      <!-- 產品列表 start -->
+      <div class="row mt-4">
+        <div v-for="(item, index) in products" :key="item.id" class="col-md-4 mb-4">
+          <div class="card border-0 shadow-sm">
+            <div style="height: 150px; background-size: cover; background-position: center"
+              :style="{backgroundImage: `url(${item.imageUrl})`}"></div>
+            <div class="card-body">
+              <span class="badge badge-secondary float-right ml-2">{{ item.category }}</span>
+              <h5 class="card-title">
+                <a href="#" class="text-dark">{{ item.title }}</a>
+              </h5>
+              <p class="card-text" v-html="item.content">
+                {{ item.content }}
+              </p>
+              <div class="d-flex justify-content-between align-items-baseline">
+                <!-- price 是選填，如果沒有，就顯只顯示 origin_price
+                    如果有，就顯示 price 並且 origin_price 帶 <del> -->
+                <div v-if="!item.price" class="h5">
+                  {{ item.origin_price }} 元
+                </div>
+                <div v-else>
+                  <del class="h6">原價 {{ item.origin_price }} 元</del>
+                  <div class="h5">
+                    現在只要 {{ item.price }} 元
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="card-footer d-flex">
+              <!-- <button type="button" class="btn btn-outline-secondary btn-sm" :disabled="status.loadingItem === item.id"
+                @click="getDetailed(item.id)">
+                <i v-if="status.loadingItem === item.id" class="spinner-grow spinner-grow-sm"></i>
+                查看更多
+              </button> -->
+              <!-- <button type="button" class="btn btn-outline-danger btn-sm ml-auto"
+                :disabled="status.loadingItem === item.id" @click="addToCart(item)">
+                <i v-if="status.loadingItem === item.id" class="spinner-grow spinner-grow-sm"></i>
+                加到購物車
+              </button> -->
+            </div>
+          </div>
+        </div>
+      </div>
+      <!-- 產品列表 end -->
+
       <!-- validation-observer v-slot 回饋表單有沒有通過驗證 -->
       <validation-observer v-slot="{ invalid }" class="col-md-6">
         <!-- form 不帶 action，用 submit 取消預設，並載入自定義方法 -->
@@ -94,6 +139,8 @@
 
   <!-- Vue.js -->
   <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+  <!-- 載入 axios -->
+  <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
   <!-- https://cdnjs.com/libraries/vee-validate 注意版本，full 則包含 rules -->
   <script src="https://cdnjs.cloudflare.com/ajax/libs/vee-validate/3.3.0/vee-validate.full.min.js"></script>
   <!-- vue-loading-overlay -->

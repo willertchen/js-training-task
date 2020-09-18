@@ -34,6 +34,9 @@ new Vue({
       payment: '',
       message: '',
     },
+    status: {
+      loadingItem: '', //透過此屬性，可以綁定單一個產品的 Btn，取資料時，Btn 則會帶有「旋轉效果」
+    },
     isLoading: false,
     uuid: 'd5cc7331-56ba-49f5-9c9f-6c2038f2b0a8',
     apiPath: 'https://course-ec-api.hexschool.io',
@@ -50,5 +53,18 @@ new Vue({
         this.isLoading = false;
       });
     },
+    getProductDetail(id) {
+      this.status.loadingItem = id;
+      const api = `${this.apiPath}/api/${this.uuid}/ec/product/${id}`;
+      axios.get(api).then((response) => {
+        this.tempProduct = response.data.data;
+        // 使用 $set 在 tempProdct 裡面，新增屬性 num，供 option 選定數量時能存起來
+        // 因 tempProduct 沒有 num 的預設值
+        // 如果直接用物件新增屬性則會雙向綁定失敗
+        this.$set(this.tempProduct, 'num', 0);
+        $('#productModal').modal('show');
+        this.status.loadingItem = ''; // 結束 btn 的等待效果
+      });
+    }
   },
 });

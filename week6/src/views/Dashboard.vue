@@ -1,10 +1,9 @@
 <template>
-  <div class="home">
+  <div class="dashboard">
     <div class="nav">
-      <router-link to="/">前台首頁</router-link> |
-      <router-link to="/about">關於</router-link> |
-      <router-link to="/products">產品列表</router-link> |
       <router-link to="/admin/">後台首頁</router-link> |
+      <router-link to="/admin/products">後台產品列表</router-link> |
+      <router-link to="/">返品前台首頁</router-link> |
     </div>
     <router-view></router-view>
   </div>
@@ -12,7 +11,7 @@
 
 <script>
 export default {
-  name: 'Home',
+  name: 'Dashboard',
   data() {
     return {
     };

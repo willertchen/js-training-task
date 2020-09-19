@@ -28,6 +28,24 @@ const routes = [
       },
     ],
   },
+  {
+    path: '/admin',
+    component: () => import('../views/Dashboard.vue'),
+    children: [
+      {
+        path: '',
+        component: () => import('../views/dashboard/Index.vue'),
+      },
+      {
+        path: 'products',
+        component: () => import('../views/dashboard/Products.vue'),
+      },
+      {
+        path: 'product',
+        component: () => import('../views/dashboard/Product.vue'),
+      },
+    ],
+  },
 ];
 
 const router = new VueRouter({

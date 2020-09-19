@@ -9,12 +9,17 @@ const routes = [
     component: () => import('../views/Home.vue'),
     children: [
       {
+        // 巢狀路由的 path 不需 '/'
         path: '',
         component: () => import('../views/Index.vue'),
       },
       {
         path: 'about',
         component: () => import('../views/About.vue'),
+      },
+      {
+        path: 'products',
+        component: () => import('../views/Products.vue'),
       },
     ],
   },

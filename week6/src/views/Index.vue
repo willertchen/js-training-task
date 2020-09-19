@@ -1,12 +1,12 @@
 <template>
-  <div class="about">
-    <h1>關於我</h1>
+  <div>
+    <h1>前台首頁</h1>
   </div>
 </template>
 
 <script>
 export default {
-  name: 'About',
+  name: 'Index',
   data() {
     return {
     };

@@ -5,7 +5,10 @@
       <tr v-for="item in products" :key="item.id">
         <td>{{ item.title }}</td>
         <td>{{ item.content }}</td>
-        <td>看產品</td>
+        <td>{{ item.price }}</td>
+        <td>
+          <router-link :to="`product/${item.id}`">看產品</router-link>
+        </td>
       </tr>
     </table>
   </div>

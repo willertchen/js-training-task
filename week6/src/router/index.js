@@ -21,6 +21,11 @@ const routes = [
         path: 'products',
         component: () => import('../views/Products.vue'),
       },
+      {
+        // 加上分號「：」為動態路由
+        path: 'product/:id',
+        component: () => import('../views/Product.vue'),
+      },
     ],
   },
 ];

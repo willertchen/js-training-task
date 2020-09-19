@@ -117,5 +117,21 @@ new Vue({
         this.getCart();
       });
     },
+    removeCartItem(id) {
+      this.isLoading = true;
+      const api = `${this.apiPath}/api/${this.uuid}/ec/shopping/${id}`;
+      axios.delete(api).then(() => {
+        this.isLoading = true;
+        this.getCart();
+      });
+    },
+    removeCartAllItem() {
+      this.isLoading = true;
+      const api = `${this.apiPath}/api/${this.uuid}/ec/shopping/all/product`;
+      axios.delete(api).then(() => {
+        this.isLoading = true;
+        this.getCart();
+      });
+    }
   }
 });

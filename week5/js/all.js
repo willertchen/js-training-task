@@ -121,7 +121,7 @@ new Vue({
       this.isLoading = true;
       const api = `${this.apiPath}/api/${this.uuid}/ec/shopping/${id}`;
       axios.delete(api).then(() => {
-        this.isLoading = true;
+        this.isLoading = false;
         this.getCart();
       });
     },
@@ -129,8 +129,23 @@ new Vue({
       this.isLoading = true;
       const api = `${this.apiPath}/api/${this.uuid}/ec/shopping/all/product`;
       axios.delete(api).then(() => {
-        this.isLoading = true;
+        this.isLoading = false;
         this.getCart();
+      });
+    },
+    createOrder() {
+      this.isLoading = true;
+      const api = `${this.apiPath}/api/${this.uuid}/ec/orders`;
+      axios.post(api, this.form).then((response) => {
+        // 如果回應成功，會有 id，表示訂單已經建立
+        if (response.data.data.id) {
+          this.isLoading = false;
+          $('#orderModal').modal('show');
+          this.getCart();
+        }
+      }).catch((err) => {
+        this.isLoading = false;
+        console.log(err.methods);
       });
     }
   }

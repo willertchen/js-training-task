@@ -195,7 +195,7 @@
       <!-- validation-observer v-slot 回饋表單有沒有通過驗證 -->
       <validation-observer v-slot="{ invalid }" class="col-md-6">
         <!-- form 不帶 action，用 submit 取消預設，並載入自定義方法 -->
-        <form @submit.prevent="checkSubmit">
+        <form @submit.prevent="createOrder">
           <div class="form-group">
             <!-- v-slot 的 errors 是錯誤的回饋訊息，classes 則是樣式的回饋訊息 -->
             <validation-provider v-slot="{ errors, classes }" rules="required">
@@ -258,6 +258,28 @@
       </validation-observer>
     </div>
     <!-- 訂單 end -->
+
+    <!-- 完成訂單 Modal start -->
+    <div class="modal fade" id="orderModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+    aria-hidden="true">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="exampleModalLabel">完成訂單</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+          <p>恭喜你已完成訂單。</p>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-dismiss="modal">關閉</button>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!-- 完成訂單 Modal end -->
 
   </div> <!-- div#app -->
 

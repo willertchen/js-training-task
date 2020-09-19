@@ -1,0 +1,2 @@
+(window["webpackJsonp"]=window["webpackJsonp"]||[]).push([["chunk-2d0daa6d"],{"6d09":function(n,t,e){"use strict";e.r(t);var r=function(){var n=this,t=n.$createElement,e=n._self._c||t;return e("div",[e("h1",[n._v("後台產品列表")]),e("router-link",{attrs:{to:"/admin/product/"}},[n._v("看產品")])],1)},u=[],a={name:"Products",data:function(){return{}}},c=a,d=e("2877"),o=Object(d["a"])(c,r,u,!1,null,null,null);t["default"]=o.exports}}]);
+//# sourceMappingURL=chunk-2d0daa6d.6972e691.js.map

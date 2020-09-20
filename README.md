@@ -10,4 +10,4 @@
 
 [第七週 - 完成後台功能](https://eml0777.github.io/js-training-task/week7/dist/index.html)
 
-[第七週 - 最終挑戰](https://eml0777.github.io/js-training-task/week8/dist/index.html)
+[第八週 - 最終挑戰](https://eml0777.github.io/js-training-task/week8/dist/index.html)

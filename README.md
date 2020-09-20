@@ -7,3 +7,5 @@
 [第五週 - 表單驗證](https://eml0777.github.io/js-training-task/week5/index.html)
 
 [第六週 - 建立路由](https://eml0777.github.io/js-training-task/week6/dist/index.html)
+
+[第七週 - 完成後台功能](https://eml0777.github.io/js-training-task/week7/dist/index.html)

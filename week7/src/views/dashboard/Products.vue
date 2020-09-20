@@ -1,5 +1,6 @@
 <template>
   <div>
+    <Loading :active.sync="isLoading" />
     <div class="text-right">
       <button class="btn btn-primary" @click="openModal('new')">
         建立新的產品
@@ -27,18 +28,18 @@
             <span v-else>未啟用</span>
           </td>
           <td>
-            <!-- <button class="btn btn-outline-success btn-sm"
-              @click="openModal('edit', item)">編輯</button> -->
-            <!-- <button class="btn btn-outline-danger btn-sm"
-              @click="openModal('delete', item)">刪除</button> -->
+            <button class="btn btn-outline-success btn-sm"
+              @click="openModal('edit', item)">編輯</button>
+            <button class="btn btn-outline-danger btn-sm"
+              @click="openModal('delete', item)">刪除</button>
           </td>
         </tr>
       </tbody>
     </table>
     <pagination :pages='pagination' @emit-pages='getProducts'></pagination>
 
-    <!-- Update Modal -->
-    <!-- <div class="modal fade"
+    <!-- Update Modal Start -->
+    <div class="modal fade"
       id="productModal"
       tabindex="-1"
       role="dialog"
@@ -139,7 +140,35 @@
           </div>
         </div>
       </div>
-    </div> -->
+    </div>
+    <!-- Update Modal End -->
+
+    <!-- Delete Modal Start -->
+    <div class="modal fade"
+      id="deleteModal"
+      tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="exampleModalLabel">
+              <span>刪除產品</span>
+            </h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          <div class="modal-body">
+            是否要刪除
+            <strong class="text-danger"> {{ tempProduct.title }} </strong> 商品(刪除後無法恢復)
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-dismiss="modal">取消</button>
+            <button type="button" class="btn btn-primary" @click="deleteProduct">確認刪除</button>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- Delete Modal End -->
   </div>
 </template>
 
@@ -160,10 +189,12 @@ export default {
         imageUrl: [],
       },
       isNew: false,
+      isLoading: false,
     };
   },
   props: ['token'],
   created() {
+    this.isLoading = true;
     this.getProducts();
   },
   methods: {
@@ -173,6 +204,7 @@ export default {
       this.$http.get(api).then((response) => {
         this.products = response.data.data;
         this.pagination = response.data.meta.pagination;
+        this.isLoading = false;
       });
     },
     openModal(type, item) {
@@ -199,6 +231,53 @@ export default {
         default:
           break;
       }
+    },
+    getProduct(id) {
+      this.isLoading = true;
+
+      const api = `${process.env.VUE_APP_APIPATH}/api/${process.env.VUE_APP_UUID}/ec/product/${id}`;
+      this.$http.get(api).then((res) => {
+        //  成功取得資料，丟到 tempProduct
+        this.tempProduct = res.data.data;
+
+        this.isLoading = false;
+
+        // 資料成功寫入 tempProduct，打開 Modal
+        $('#productModal').modal('show');
+      }).catch((error) => {
+        // eslint-disable-next-line no-console
+        console.log(error); // 如果出現錯誤，就打印在 log
+      });
+    },
+    updateProduct() {
+      // 編輯產品的 api
+      let api = `${process.env.VUE_APP_APIPATH}/api/${process.env.VUE_APP_UUID}/admin/ec/product/${this.tempProduct.id}`;
+      let httpMethod = 'patch';
+
+      if (this.isNew) {
+        api = `${process.env.VUE_APP_APIPATH}/api/${process.env.VUE_APP_UUID}/admin/ec/product`;
+        httpMethod = 'post';
+      }
+
+      this.isLoading = true;
+      this.$http[httpMethod](api, this.tempProduct).then(() => {
+        $('#productModal').modal('hide'); // AJAX 編輯 or 新增成功後，關閉 Modal
+        this.getProducts(); // 重新取得全部資料
+      }).catch((error) => {
+        // eslint-disable-next-line no-console
+        console.log(error); // 如果出現錯誤，就打印在 log
+      });
+    },
+    deleteProduct() {
+      this.isLoading = true;
+
+      const url = `${process.env.VUE_APP_APIPATH}/api/${process.env.VUE_APP_UUID}/admin/ec/product/${this.tempProduct.id}`;
+
+      this.$http.delete(url).then(() => {
+        $('#deleteModal').modal('hide'); // 刪除成功，關閉 Modal
+        this.isLoading = false;
+        this.getProducts(); // 重新取得全部資料
+      });
     },
   },
 };

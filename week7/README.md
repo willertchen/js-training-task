@@ -19,3 +19,4 @@
 1. 登入頁面
    - 完成登入
    - 存取 token
+   - 登入後在 Dashboard 檢查 token

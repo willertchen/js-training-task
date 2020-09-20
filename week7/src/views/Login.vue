@@ -18,13 +18,14 @@
               placeholder="Email address"
               required
               autofocus
+              autocomplete="username"
             >
             <!-- ESLint Max-len 100，單行不能超過 100-->
           </div>
           <div class="form-group">
             <label for="inputPassword" class="sr-only">Password</label>
             <input id="inputPassword" v-model="user.password" type="password" class="form-control"
-              placeholder="Password" required>
+              placeholder="Password" autocomplete="current-password" required>
           </div>
           <button class="btn btn-lg btn-primary btn-block" type="submit">
             登入
@@ -54,15 +55,19 @@ export default {
 
       const api = `${process.env.VUE_APP_APIPATH}/api/auth/login`;
       this.$http.post(api, this.user).then((res) => {
-        const { token } = res.data.token;
-        const { expired } = res.data.expired;
+        const { token } = res.data;
+        const { expired } = res.data;
 
         // 把 hexToken 寫入 cookie
         // expried 設置有效時間
-        document.cookie = `hexToken=${token};expires=${new Date(expired * 1000)}`;
+        document.cookie = `hexToken=${token};expires=${new Date(expired * 1000)};`;
         this.isLoading = false;
 
         this.$router.push('admin/products');
+      }).catch((err) => {
+        // eslint-disable-next-line no-console
+        console.log('登入失敗', err);
+        this.isLoading = false;
       });
     },
   },

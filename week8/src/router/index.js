@@ -8,11 +8,18 @@ const routes = [
     path: '/',
     name: 'index',
     component: () => import('../views/Index.vue'),
-  },
-  {
-    path: '/login',
-    name: 'Login',
-    component: () => import('../views/frontend/Login.vue'),
+    children: [
+      {
+        path: '/login',
+        name: 'Login',
+        component: () => import('../views/frontend/Login.vue'),
+      },
+      {
+        path: '/products',
+        name: 'Products',
+        component: () => import('../views/frontend/Products.vue'),
+      },
+    ],
   },
   {
     path: '/admin',

@@ -35,6 +35,7 @@
         </tr>
       </tbody>
     </table>
+    <pagination :pages='pagination' @emit-pages='getProducts'></pagination>
 
     <!-- Update Modal -->
     <!-- <div class="modal fade"
@@ -144,11 +145,17 @@
 
 <script>
 /* global $ */
+import Pagination from '@/components/Pagination.vue';
+
 export default {
   name: 'Products',
+  components: {
+    Pagination,
+  },
   data() {
     return {
       products: [],
+      pagination: {},
       tempProduct: {
         imageUrl: [],
       },
@@ -160,11 +167,12 @@ export default {
     this.getProducts();
   },
   methods: {
-    getProducts() {
-      const api = `${process.env.VUE_APP_APIPATH}/api/${process.env.VUE_APP_UUID}/admin/ec/products?sort=asc`;
+    getProducts(page = 1) {
+      const api = `${process.env.VUE_APP_APIPATH}/api/${process.env.VUE_APP_UUID}/admin/ec/products?page=${page}`;
 
       this.$http.get(api).then((response) => {
         this.products = response.data.data;
+        this.pagination = response.data.meta.pagination;
       });
     },
     openModal(type, item) {

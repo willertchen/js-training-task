@@ -15,6 +15,7 @@
       <div class="navbar-nav">
         <router-link class="nav-item nav-link mr-4" to="/">Home</router-link>
         <router-link class="nav-item nav-link mr-4" to="/products">Products</router-link>
+        <router-link class="nav-item nav-link mr-4" to="/cart">Cart</router-link>
         <router-link class="nav-item nav-link mr-4" to="/login">Login</router-link>
       </div>
 

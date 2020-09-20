@@ -25,6 +25,12 @@ const routes = [
         component: () => import('../views/dashboard/Products.vue'),
         meta: { requiresAuth: true },
       },
+      {
+        path: 'orders',
+        name: '訂單列表',
+        component: () => import('../views/dashboard/Orders.vue'),
+        meta: { requiresAuth: true },
+      },
     ],
   },
 ];

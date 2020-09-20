@@ -18,6 +18,20 @@ const routes = [
     path: '/admin',
     name: 'Admin 頁面',
     component: () => import('../views/Dashboard.vue'),
+    children: [
+      {
+        path: 'products',
+        name: '產品頁面',
+        component: () => import('../views/backend/Products.vue'),
+        meta: { requiresAuth: true },
+      },
+      {
+        path: 'orders',
+        name: '訂單列表',
+        component: () => import('../views/backend/Orders.vue'),
+        meta: { requiresAuth: true },
+      },
+    ],
   },
 ];
 

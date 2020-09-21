@@ -8,6 +8,7 @@ const routes = [
     path: '/',
     name: 'index',
     component: () => import('../views/Index.vue'),
+    redirect: '/home',
     children: [
       {
         path: '/login',
@@ -24,12 +25,18 @@ const routes = [
         name: 'Carts',
         component: () => import('../views/frontend/Cart.vue'),
       },
+      {
+        path: '/home',
+        name: 'Home',
+        component: () => import('../views/frontend/Home.vue'),
+      },
     ],
   },
   {
     path: '/admin',
     name: 'Admin 頁面',
     component: () => import('../views/Dashboard.vue'),
+    redirect: 'admin/products',
     children: [
       {
         path: 'products',

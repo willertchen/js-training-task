@@ -1,7 +1,7 @@
 <template>
   <nav class="navbar navbar-expand-lg navbar-light">
-    <router-link class="nav-item nav-link mr-4"
-        to="/">Navbar</router-link>
+    <router-link class="navbar-brand"
+        to="/Home">Navbar</router-link>
     <button class="navbar-toggler"
       type="button"
       data-toggle="collapse"
@@ -15,7 +15,7 @@
     <div id="navbarNavAltMarkup" class="collapse navbar-collapse justify-content-end">
       <div class="navbar-nav">
         <router-link class="nav-item nav-link mr-4"
-          class-active="active" to="/">Home</router-link>
+          class-active="active" to="/Home">Home</router-link>
         <router-link class="nav-item nav-link mr-4"
           class-active="active" to="/products">Products</router-link>
         <router-link class="nav-item nav-link mr-4"

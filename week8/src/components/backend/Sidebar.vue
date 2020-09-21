@@ -1,6 +1,7 @@
 <template>
   <nav class="navbar navbar-expand-lg navbar-light bg-light">
-    <a class="navbar-brand" href="#">後台管理系統</a>
+    <router-link class="navbar-brand" class-active="active"
+            to=/admin>後台管理系統</router-link>
     <button
       class="navbar-toggler"
       type="button"

@@ -1,6 +1,7 @@
 <template>
   <nav class="navbar navbar-expand-lg navbar-light">
-    <a class="navbar-brand" href="#">Navbar</a>
+    <router-link class="nav-item nav-link mr-4"
+        to="/">Navbar</router-link>
     <button class="navbar-toggler"
       type="button"
       data-toggle="collapse"
@@ -13,10 +14,16 @@
 
     <div id="navbarNavAltMarkup" class="collapse navbar-collapse justify-content-end">
       <div class="navbar-nav">
-        <router-link class="nav-item nav-link mr-4" to="/">Home</router-link>
-        <router-link class="nav-item nav-link mr-4" to="/products">Products</router-link>
-        <router-link class="nav-item nav-link mr-4" to="/cart">Cart</router-link>
-        <router-link class="nav-item nav-link mr-4" to="/login">Login</router-link>
+        <router-link class="nav-item nav-link mr-4"
+          class-active="active" to="/">Home</router-link>
+        <router-link class="nav-item nav-link mr-4"
+          class-active="active" to="/products">Products</router-link>
+        <router-link class="nav-item nav-link mr-4"
+          class-active="active" to="/cart">
+          <i class="fas fa-shopping-cart"></i>
+        </router-link>
+        <router-link class="nav-item nav-link mr-4"
+          class-active="active" to="/login">Login</router-link>
       </div>
 
     </div>
